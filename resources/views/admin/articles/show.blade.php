@@ -41,6 +41,18 @@
                     </tr>
                     <tr>
                         <th>
+                            {{ trans('cruds.article.fields.image') }}
+                        </th>
+                        <td>
+                            @if($article->image)
+                                <a href="{{ $article->image->getUrl() }}" target="_blank" style="display: inline-block">
+                                    <img src="{{ $article->image->getUrl('thumb') }}">
+                                </a>
+                            @endif
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
                             {{ trans('cruds.article.fields.pdf') }}
                         </th>
                         <td>

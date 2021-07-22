@@ -27,6 +27,10 @@ class CategoryApiController extends Controller
     {
         $category = Category::create($request->all());
 
+        if ($request->input('image', false)) {
+            $category->addMedia(storage_path('tmp/uploads/' . basename($request->input('image'))))->toMediaCollection('image');
+        }
+
         return (new CategoryResource($category))
             ->response()
             ->setStatusCode(Response::HTTP_CREATED);
@@ -42,6 +46,17 @@ class CategoryApiController extends Controller
     public function update(UpdateCategoryRequest $request, Category $category)
     {
         $category->update($request->all());
+
+        if ($request->input('image', false)) {
+            if (!$category->image || $request->input('image') !== $category->image->file_name) {
+                if ($category->image) {
+                    $category->image->delete();
+                }
+                $category->addMedia(storage_path('tmp/uploads/' . basename($request->input('image'))))->toMediaCollection('image');
+            }
+        } elseif ($category->image) {
+            $category->image->delete();
+        }
 
         return (new CategoryResource($category))
             ->response()

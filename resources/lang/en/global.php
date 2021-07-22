@@ -57,6 +57,8 @@ return [
     'update_profile_success'         => 'Profile updated successfully',
     'change_password_success'        => 'Password changed successfully',
     'delete_account_success'         => 'Account deleted successfully',
+    'saved'                          => 'Saved.',
+    'profile_information'            => 'Profile information',
     'all_messages'                   => 'All Messages',
     'new_message'                    => 'New message',
     'messages'                       => 'Messages',

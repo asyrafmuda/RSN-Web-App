@@ -28,6 +28,9 @@
                         {{ trans('cruds.article.fields.name') }}
                     </th>
                     <th>
+                        {{ trans('cruds.article.fields.image') }}
+                    </th>
+                    <th>
                         {{ trans('cruds.article.fields.pdf') }}
                     </th>
                     <th>
@@ -94,6 +97,7 @@
       { data: 'placeholder', name: 'placeholder' },
 { data: 'id', name: 'id' },
 { data: 'name', name: 'name' },
+{ data: 'image', name: 'image', sortable: false, searchable: false },
 { data: 'pdf', name: 'pdf', sortable: false, searchable: false },
 { data: 'publish_at', name: 'publish_at' },
 { data: 'category_name', name: 'category.name' },

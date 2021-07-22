@@ -77,6 +77,28 @@
                 </a>
             </li>
         @endcan
+        @can('mobile_banner_access')
+            <li class="c-sidebar-nav-dropdown {{ request()->is("admin/banners*") ? "c-show" : "" }}">
+                <a class="c-sidebar-nav-dropdown-toggle" href="#">
+                    <i class="fa-fw fas fa-cogs c-sidebar-nav-icon">
+
+                    </i>
+                    {{ trans('cruds.mobileBanner.title') }}
+                </a>
+                <ul class="c-sidebar-nav-dropdown-items">
+                    @can('banner_access')
+                        <li class="c-sidebar-nav-item">
+                            <a href="{{ route("admin.banners.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/banners") || request()->is("admin/banners/*") ? "c-active" : "" }}">
+                                <i class="fa-fw fas fa-cogs c-sidebar-nav-icon">
+
+                                </i>
+                                {{ trans('cruds.banner.title') }}
+                            </a>
+                        </li>
+                    @endcan
+                </ul>
+            </li>
+        @endcan
         @if(file_exists(app_path('Http/Controllers/Auth/ChangePasswordController.php')))
             @can('profile_password_edit')
                 <li class="c-sidebar-nav-item">

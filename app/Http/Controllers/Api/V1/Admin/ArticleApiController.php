@@ -27,6 +27,10 @@ class ArticleApiController extends Controller
     {
         $article = Article::create($request->all());
 
+        if ($request->input('image', false)) {
+            $article->addMedia(storage_path('tmp/uploads/' . basename($request->input('image'))))->toMediaCollection('image');
+        }
+
         if ($request->input('pdf', false)) {
             $article->addMedia(storage_path('tmp/uploads/' . basename($request->input('pdf'))))->toMediaCollection('pdf');
         }
@@ -46,6 +50,17 @@ class ArticleApiController extends Controller
     public function update(UpdateArticleRequest $request, Article $article)
     {
         $article->update($request->all());
+
+        if ($request->input('image', false)) {
+            if (!$article->image || $request->input('image') !== $article->image->file_name) {
+                if ($article->image) {
+                    $article->image->delete();
+                }
+                $article->addMedia(storage_path('tmp/uploads/' . basename($request->input('image'))))->toMediaCollection('image');
+            }
+        } elseif ($article->image) {
+            $article->image->delete();
+        }
 
         if ($request->input('pdf', false)) {
             if (!$article->pdf || $request->input('pdf') !== $article->pdf->file_name) {

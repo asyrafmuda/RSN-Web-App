@@ -51,6 +51,17 @@ class ArticleController extends Controller
             $table->editColumn('name', function ($row) {
                 return $row->name ? $row->name : '';
             });
+            $table->editColumn('image', function ($row) {
+                if ($photo = $row->image) {
+                    return sprintf(
+        '<a href="%s" target="_blank"><img src="%s" width="50px" height="50px"></a>',
+        $photo->url,
+        $photo->thumbnail
+    );
+                }
+
+                return '';
+            });
             $table->editColumn('pdf', function ($row) {
                 return $row->pdf ? '<a href="' . $row->pdf->getUrl() . '" target="_blank">' . trans('global.downloadFile') . '</a>' : '';
             });
@@ -59,7 +70,7 @@ class ArticleController extends Controller
                 return $row->category ? $row->category->name : '';
             });
 
-            $table->rawColumns(['actions', 'placeholder', 'pdf', 'category']);
+            $table->rawColumns(['actions', 'placeholder', 'image', 'pdf', 'category']);
 
             return $table->make(true);
         }
@@ -79,6 +90,10 @@ class ArticleController extends Controller
     public function store(StoreArticleRequest $request)
     {
         $article = Article::create($request->all());
+
+        if ($request->input('image', false)) {
+            $article->addMedia(storage_path('tmp/uploads/' . basename($request->input('image'))))->toMediaCollection('image');
+        }
 
         if ($request->input('pdf', false)) {
             $article->addMedia(storage_path('tmp/uploads/' . basename($request->input('pdf'))))->toMediaCollection('pdf');
@@ -105,6 +120,17 @@ class ArticleController extends Controller
     public function update(UpdateArticleRequest $request, Article $article)
     {
         $article->update($request->all());
+
+        if ($request->input('image', false)) {
+            if (!$article->image || $request->input('image') !== $article->image->file_name) {
+                if ($article->image) {
+                    $article->image->delete();
+                }
+                $article->addMedia(storage_path('tmp/uploads/' . basename($request->input('image'))))->toMediaCollection('image');
+            }
+        } elseif ($article->image) {
+            $article->image->delete();
+        }
 
         if ($request->input('pdf', false)) {
             if (!$article->pdf || $request->input('pdf') !== $article->pdf->file_name) {
