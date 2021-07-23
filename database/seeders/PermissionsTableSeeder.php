@@ -116,6 +116,30 @@ class PermissionsTableSeeder extends Seeder
             ],
             [
                 'id'    => 27,
+                'title' => 'mobile_banner_access',
+            ],
+            [
+                'id'    => 28,
+                'title' => 'banner_create',
+            ],
+            [
+                'id'    => 29,
+                'title' => 'banner_edit',
+            ],
+            [
+                'id'    => 30,
+                'title' => 'banner_show',
+            ],
+            [
+                'id'    => 31,
+                'title' => 'banner_delete',
+            ],
+            [
+                'id'    => 32,
+                'title' => 'banner_access',
+            ],
+            [
+                'id'    => 33,
                 'title' => 'profile_password_edit',
             ],
         ];

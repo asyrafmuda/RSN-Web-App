@@ -50,8 +50,19 @@ class CategoryController extends Controller
             $table->editColumn('name', function ($row) {
                 return $row->name ? $row->name : '';
             });
+            $table->editColumn('image', function ($row) {
+                if ($photo = $row->image) {
+                    return sprintf(
+        '<a href="%s" target="_blank"><img src="%s" width="50px" height="50px"></a>',
+        $photo->url,
+        $photo->thumbnail
+    );
+                }
 
-            $table->rawColumns(['actions', 'placeholder']);
+                return '';
+            });
+
+            $table->rawColumns(['actions', 'placeholder', 'image']);
 
             return $table->make(true);
         }
@@ -70,6 +81,10 @@ class CategoryController extends Controller
     {
         $category = Category::create($request->all());
 
+        if ($request->input('image', false)) {
+            $category->addMedia(storage_path('tmp/uploads/' . basename($request->input('image'))))->toMediaCollection('image');
+        }
+
         if ($media = $request->input('ck-media', false)) {
             Media::whereIn('id', $media)->update(['model_id' => $category->id]);
         }
@@ -87,6 +102,17 @@ class CategoryController extends Controller
     public function update(UpdateCategoryRequest $request, Category $category)
     {
         $category->update($request->all());
+
+        if ($request->input('image', false)) {
+            if (!$category->image || $request->input('image') !== $category->image->file_name) {
+                if ($category->image) {
+                    $category->image->delete();
+                }
+                $category->addMedia(storage_path('tmp/uploads/' . basename($request->input('image'))))->toMediaCollection('image');
+            }
+        } elseif ($category->image) {
+            $category->image->delete();
+        }
 
         return redirect()->route('admin.categories.index');
     }
