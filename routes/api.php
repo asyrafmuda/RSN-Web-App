@@ -1,6 +1,6 @@
 <?php
 
-Route::group(['prefix' => 'v1', 'as' => 'api.', 'namespace' => 'Api\V1\Admin', 'middleware' => ['auth:sanctum']], function () {
+Route::group(['prefix' => 'v1', 'as' => 'api.', 'namespace' => 'Api\V1\Admin'], function () {
     // Permissions
     Route::apiResource('permissions', 'PermissionsApiController');
 
@@ -17,6 +17,7 @@ Route::group(['prefix' => 'v1', 'as' => 'api.', 'namespace' => 'Api\V1\Admin', '
     // Article
     Route::post('articles/media', 'ArticleApiController@storeMedia')->name('articles.storeMedia');
     Route::apiResource('articles', 'ArticleApiController');
+    Route::get('articles/category', 'ArticleApiController@category');
 
     // Banner
     Route::post('banners/media', 'BannerApiController@storeMedia')->name('banners.storeMedia');
