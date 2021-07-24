@@ -24,18 +24,14 @@ class ArticleApiController extends Controller
     // }
 
 
-    public function index()
+    public function index(Request $request)
     {
-        // abort_if(Gate::denies('article_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        $articles = Article::with(['category'])->get();
 
-        return new ArticleResource(Article::with(['category'])->get());
-    }
-
-    public function category(Request $request)
-    {
-        // abort_if(Gate::denies('article_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
-        return new ArticleResource(Article::where('category_id', $request->category_id)->with(['category'])->get());
+        if ($request->category_id) {
+            $articles = Article::where('category_id', $request->category_id)->with(['category'])->get();;
+        }
+        return new ArticleResource($articles);
     }
 
     public function store(StoreArticleRequest $request)
