@@ -14,6 +14,7 @@ use Illuminate\Http\Request;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Symfony\Component\HttpFoundation\Response;
 use Yajra\DataTables\Facades\DataTables;
+use Carbon\Carbon;
 
 class ArticleController extends Controller
 {
@@ -91,6 +92,17 @@ class ArticleController extends Controller
     {
         $article = Article::create($request->all());
 
+        $nmeng = array('january', 'february', 'march', 'april', 'may', 'june', 'july', 'ogos', 'september', 'october', 'november', 'december');
+        $nmtur = array('Januari', 'Februari', 'Mac', 'April', 'Mei', 'Jun', 'Julai', 'Ogos', 'September', 'Oktober', 'November', 'Disember');
+
+        $to_date = Carbon::parse($article->publish_at)->format('d F Y');
+        $to = str_ireplace($nmeng, $nmtur, $to_date);
+
+
+        $article->publish_date_at = $to;
+        $article->save();
+
+
         if ($request->input('image', false)) {
             $article->addMedia(storage_path('tmp/uploads/' . basename($request->input('image'))))->toMediaCollection('image');
         }
@@ -120,6 +132,17 @@ class ArticleController extends Controller
     public function update(UpdateArticleRequest $request, Article $article)
     {
         $article->update($request->all());
+
+        $nmeng = array('january', 'february', 'march', 'april', 'may', 'june', 'july', 'ogos', 'september', 'october', 'november', 'december');
+        $nmtur = array('Januari', 'Februari', 'Mac', 'April', 'Mei', 'Jun', 'Julai', 'Ogos', 'September', 'Oktober', 'November', 'Disember');
+
+        $to_date = Carbon::parse($article->publish_at)->format('d F Y');
+        $to = str_ireplace($nmeng, $nmtur, $to_date);
+
+
+        $article->publish_date_at = $to;
+        $article->save();
+
 
         if ($request->input('image', false)) {
             if (!$article->image || $request->input('image') !== $article->image->file_name) {
