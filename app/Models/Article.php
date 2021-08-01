@@ -35,6 +35,7 @@ class Article extends Model implements HasMedia
         'name',
         'description',
         'publish_at',
+        'publish_date_at',
         'category_id',
         'created_at',
         'updated_at',
