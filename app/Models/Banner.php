@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use \DateTimeInterface;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -24,12 +25,16 @@ class Banner extends Model implements HasMedia
     ];
 
     protected $dates = [
+        'published_at',
         'created_at',
         'updated_at',
         'deleted_at',
     ];
 
     protected $fillable = [
+        'title',
+        'description',
+        'published_at',
         'created_at',
         'updated_at',
         'deleted_at',
@@ -56,6 +61,16 @@ class Banner extends Model implements HasMedia
     public function getPdfAttribute()
     {
         return $this->getMedia('pdf')->last();
+    }
+
+    public function getPublishedAtAttribute($value)
+    {
+        return $value ? Carbon::parse($value)->format(config('panel.date_format')) : null;
+    }
+
+    public function setPublishedAtAttribute($value)
+    {
+        $this->attributes['published_at'] = $value ? Carbon::createFromFormat(config('panel.date_format'), $value)->format('Y-m-d') : null;
     }
 
     protected function serializeDate(DateTimeInterface $date)

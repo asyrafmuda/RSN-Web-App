@@ -26,10 +26,19 @@
                             {{ trans('cruds.banner.fields.id') }}
                         </th>
                         <th>
+                            {{ trans('cruds.banner.fields.title') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.banner.fields.description') }}
+                        </th>
+                        <th>
                             {{ trans('cruds.banner.fields.image') }}
                         </th>
                         <th>
                             {{ trans('cruds.banner.fields.pdf') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.banner.fields.published_at') }}
                         </th>
                         <th>
                             &nbsp;
@@ -46,6 +55,12 @@
                                 {{ $banner->id ?? '' }}
                             </td>
                             <td>
+                                {{ $banner->title ?? '' }}
+                            </td>
+                            <td>
+                                {{ $banner->description ?? '' }}
+                            </td>
+                            <td>
                                 @if($banner->image)
                                     <a href="{{ $banner->image->getUrl() }}" target="_blank" style="display: inline-block">
                                         <img src="{{ $banner->image->getUrl('thumb') }}">
@@ -58,6 +73,9 @@
                                         {{ trans('global.view_file') }}
                                     </a>
                                 @endif
+                            </td>
+                            <td>
+                                {{ $banner->published_at ?? '' }}
                             </td>
                             <td>
                                 @can('banner_show')
