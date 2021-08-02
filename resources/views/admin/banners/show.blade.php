@@ -25,6 +25,22 @@
                     </tr>
                     <tr>
                         <th>
+                            {{ trans('cruds.article.fields.name') }}
+                        </th>
+                        <td>
+                            {{ $banner->title }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.article.fields.description') }}
+                        </th>
+                        <td>
+                            {!! $banner->description !!}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
                             {{ trans('cruds.banner.fields.image') }}
                         </th>
                         <td>
@@ -45,6 +61,14 @@
                                     {{ trans('global.view_file') }}
                                 </a>
                             @endif
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.article.fields.publish_at') }}
+                        </th>
+                        <td>
+                            {{ \Carbon\Carbon::parse($banner->publish_at)->format('Y-m-d') }}
                         </td>
                     </tr>
                 </tbody>
