@@ -28,7 +28,7 @@
                             {{ trans('cruds.article.fields.name') }}
                         </th>
                         <td>
-                            {{ $banner->title }}
+                            {{ $banner->name }}
                         </td>
                     </tr>
                     <tr>

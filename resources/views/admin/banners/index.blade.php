@@ -52,7 +52,7 @@
                                 {{ $banner->id ?? '' }}
                             </td>
                             <td>
-                                {{ $banner->title ?? '' }}
+                                {{ $banner->name ?? '' }}
                             </td>
                             <td>
                                 @if($banner->image)
