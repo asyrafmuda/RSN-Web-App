@@ -26,10 +26,16 @@
                             {{ trans('cruds.banner.fields.id') }}
                         </th>
                         <th>
-                            {{ trans('cruds.banner.fields.image') }}
+                            {{ trans('cruds.article.fields.name') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.article.fields.image') }}
                         </th>
                         <th>
                             {{ trans('cruds.banner.fields.pdf') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.article.fields.publish_at') }}
                         </th>
                         <th>
                             &nbsp;
@@ -46,6 +52,9 @@
                                 {{ $banner->id ?? '' }}
                             </td>
                             <td>
+                                {{ $banner->title ?? '' }}
+                            </td>
+                            <td>
                                 @if($banner->image)
                                     <a href="{{ $banner->image->getUrl() }}" target="_blank" style="display: inline-block">
                                         <img src="{{ $banner->image->getUrl('thumb') }}">
@@ -58,6 +67,9 @@
                                         {{ trans('global.view_file') }}
                                     </a>
                                 @endif
+                            </td>
+                            <td>
+                                {{ \Carbon\Carbon::parse($banner->publish_at)->format('Y-m-d') }}
                             </td>
                             <td>
                                 @can('banner_show')
@@ -138,7 +150,7 @@
       $($.fn.dataTable.tables(true)).DataTable()
           .columns.adjust();
   });
-  
+
 })
 
 </script>

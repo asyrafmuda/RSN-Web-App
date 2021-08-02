@@ -12,6 +12,7 @@ use Gate;
 use Illuminate\Http\Request;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Symfony\Component\HttpFoundation\Response;
+use Carbon\Carbon;
 
 class BannerController extends Controller
 {
@@ -36,6 +37,16 @@ class BannerController extends Controller
     public function store(StoreBannerRequest $request)
     {
         $banner = Banner::create($request->all());
+
+        $nmeng = array('january', 'february', 'march', 'april', 'may', 'june', 'july', 'ogos', 'september', 'october', 'november', 'december');
+        $nmtur = array('Januari', 'Februari', 'Mac', 'April', 'Mei', 'Jun', 'Julai', 'Ogos', 'September', 'Oktober', 'November', 'Disember');
+
+        $to_date = Carbon::parse($banner->publish_at)->format('d F Y');
+        $to = str_ireplace($nmeng, $nmtur, $to_date);
+
+
+        $banner->publish_date_at = $to;
+        $banner->save();
 
         if ($request->input('image', false)) {
             $banner->addMedia(storage_path('tmp/uploads/' . basename($request->input('image'))))->toMediaCollection('image');
@@ -62,6 +73,16 @@ class BannerController extends Controller
     public function update(UpdateBannerRequest $request, Banner $banner)
     {
         $banner->update($request->all());
+
+        $nmeng = array('january', 'february', 'march', 'april', 'may', 'june', 'july', 'ogos', 'september', 'october', 'november', 'december');
+        $nmtur = array('Januari', 'Februari', 'Mac', 'April', 'Mei', 'Jun', 'Julai', 'Ogos', 'September', 'Oktober', 'November', 'Disember');
+
+        $to_date = Carbon::parse($banner->publish_at)->format('d F Y');
+        $to = str_ireplace($nmeng, $nmtur, $to_date);
+
+
+        $banner->publish_date_at = $to;
+        $banner->save();
 
         if ($request->input('image', false)) {
             if (!$banner->image || $request->input('image') !== $banner->image->file_name) {
