@@ -25,6 +25,22 @@
                     </tr>
                     <tr>
                         <th>
+                            {{ trans('cruds.banner.fields.title') }}
+                        </th>
+                        <td>
+                            {{ $banner->title }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.banner.fields.description') }}
+                        </th>
+                        <td>
+                            {{ $banner->description }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
                             {{ trans('cruds.banner.fields.image') }}
                         </th>
                         <td>
@@ -45,6 +61,14 @@
                                     {{ trans('global.view_file') }}
                                 </a>
                             @endif
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.banner.fields.published_at') }}
+                        </th>
+                        <td>
+                            {{ $banner->published_at }}
                         </td>
                     </tr>
                 </tbody>

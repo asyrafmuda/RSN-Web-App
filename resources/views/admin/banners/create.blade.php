@@ -10,6 +10,26 @@
         <form method="POST" action="{{ route("admin.banners.store") }}" enctype="multipart/form-data">
             @csrf
             <div class="form-group">
+                <label for="title">{{ trans('cruds.banner.fields.title') }}</label>
+                <input class="form-control {{ $errors->has('title') ? 'is-invalid' : '' }}" type="text" name="title" id="title" value="{{ old('title', '') }}">
+                @if($errors->has('title'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('title') }}
+                    </div>
+                @endif
+                <span class="help-block">{{ trans('cruds.banner.fields.title_helper') }}</span>
+            </div>
+            <div class="form-group">
+                <label for="description">{{ trans('cruds.banner.fields.description') }}</label>
+                <input class="form-control {{ $errors->has('description') ? 'is-invalid' : '' }}" type="text" name="description" id="description" value="{{ old('description', '') }}">
+                @if($errors->has('description'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('description') }}
+                    </div>
+                @endif
+                <span class="help-block">{{ trans('cruds.banner.fields.description_helper') }}</span>
+            </div>
+            <div class="form-group">
                 <label for="image">{{ trans('cruds.banner.fields.image') }}</label>
                 <div class="needsclick dropzone {{ $errors->has('image') ? 'is-invalid' : '' }}" id="image-dropzone">
                 </div>
@@ -30,6 +50,16 @@
                     </div>
                 @endif
                 <span class="help-block">{{ trans('cruds.banner.fields.pdf_helper') }}</span>
+            </div>
+            <div class="form-group">
+                <label for="published_at">{{ trans('cruds.banner.fields.published_at') }}</label>
+                <input class="form-control date {{ $errors->has('published_at') ? 'is-invalid' : '' }}" type="text" name="published_at" id="published_at" value="{{ old('published_at') }}">
+                @if($errors->has('published_at'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('published_at') }}
+                    </div>
+                @endif
+                <span class="help-block">{{ trans('cruds.banner.fields.published_at_helper') }}</span>
             </div>
             <div class="form-group">
                 <button class="btn btn-danger" type="submit">

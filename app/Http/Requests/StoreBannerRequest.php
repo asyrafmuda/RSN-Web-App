@@ -16,6 +16,19 @@ class StoreBannerRequest extends FormRequest
 
     public function rules()
     {
-        return [];
+        return [
+            'title' => [
+                'string',
+                'nullable',
+            ],
+            'description' => [
+                'string',
+                'nullable',
+            ],
+            'published_at' => [
+                'date_format:' . config('panel.date_format'),
+                'nullable',
+            ],
+        ];
     }
 }

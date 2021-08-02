@@ -18,7 +18,7 @@ class BannerApiController extends Controller
 
     public function index()
     {
-        // abort_if(Gate::denies('banner_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('banner_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         return new BannerResource(Banner::all());
     }
@@ -42,7 +42,7 @@ class BannerApiController extends Controller
 
     public function show(Banner $banner)
     {
-        // abort_if(Gate::denies('banner_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('banner_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         return new BannerResource($banner);
     }
@@ -80,7 +80,7 @@ class BannerApiController extends Controller
 
     public function destroy(Banner $banner)
     {
-        // abort_if(Gate::denies('banner_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('banner_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $banner->delete();
 

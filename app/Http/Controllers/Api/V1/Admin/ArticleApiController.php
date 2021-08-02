@@ -16,22 +16,11 @@ class ArticleApiController extends Controller
 {
     use MediaUploadingTrait;
 
-    // public function index()
-    // {
-    //     abort_if(Gate::denies('article_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
-    //     return new ArticleResource(Article::with(['category'])->get());
-    // }
-
-
-    public function index(Request $request)
+    public function index()
     {
-        $articles = Article::with(['category'])->get();
+        abort_if(Gate::denies('article_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        if ($request->category_id) {
-            $articles = Article::where('category_id', $request->category_id)->with(['category'])->get();;
-        }
-        return new ArticleResource($articles);
+        return new ArticleResource(Article::with(['category'])->get());
     }
 
     public function store(StoreArticleRequest $request)
@@ -53,7 +42,7 @@ class ArticleApiController extends Controller
 
     public function show(Article $article)
     {
-
+        abort_if(Gate::denies('article_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         return new ArticleResource($article->load(['category']));
     }
@@ -91,7 +80,7 @@ class ArticleApiController extends Controller
 
     public function destroy(Article $article)
     {
-
+        abort_if(Gate::denies('article_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $article->delete();
 
