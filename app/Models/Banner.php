@@ -38,6 +38,7 @@ class Banner extends Model implements HasMedia
         'created_at',
         'updated_at',
         'deleted_at',
+        'category_id',
     ];
 
     public function registerMediaConversions(Media $media = null): void
@@ -66,5 +67,10 @@ class Banner extends Model implements HasMedia
     protected function serializeDate(DateTimeInterface $date)
     {
         return $date->format('Y-m-d H:i:s');
+    }
+
+    public function category()
+    {
+        return $this->belongsTo(Category::class, 'category_id');
     }
 }
