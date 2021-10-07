@@ -133,7 +133,7 @@
 <script>
     Dropzone.options.pdfDropzone = {
     url: '{{ route('admin.banners.storeMedia') }}',
-    maxFilesize: 20, // MB
+    maxFilesize: 30, // MB
     maxFiles: 1,
     addRemoveLinks: true,
     headers: {
